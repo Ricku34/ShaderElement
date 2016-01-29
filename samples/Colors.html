@@ -1,0 +1,45 @@
+<html>
+<head> 
+	<script type="text/javascript" src="../src/ShaderElement.js"></script>
+</head>
+<body style="text-align : center">
+  <shader style="border: none; width: 300px; height: 300px" color="[0.0, 0.0, 1.0, 1.0]">
+	uniform vec4 color;
+	
+	void main(void) 
+	{
+		gl_FragColor = color;
+	}
+  </shader>
+  
+  <shader style="border: none; width: 300px; height: 300px">
+	uniform vec2 resolution;
+	
+	void main(void) 
+	{
+		vec2 position = 2.0*gl_FragCoord.xy/resolution - vec2(1.0);
+		gl_FragColor = vec4(-1.0*position.x,abs(position.y),position.x,1.0);
+	}
+  </shader>
+  <br/>
+  
+  <shader style="border: none; width: 300px; height: 300px">
+	uniform float time;
+	
+	void main(void) 
+	{
+		gl_FragColor = vec4(cos(time),1.0-(cos(time)*sin(time)),sin(time),1.0);
+	}
+  </shader>
+  <shader style="border: none; width: 300px; height: 300px">
+	uniform float time;
+	uniform vec2 resolution;
+	
+	void main(void) 
+	{
+		vec2 position = 2.0*gl_FragCoord.xy/resolution - vec2(1.0);
+		gl_FragColor = vec4(abs(cos(time+position.x)),0.0,abs(sin(time+position.y)),1.0);
+	}
+  </shader>
+</body>
+</html>
