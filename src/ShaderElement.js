@@ -181,6 +181,7 @@
 													canvas.gl.texImage2D(canvas.gl.TEXTURE_2D, 0, canvas.gl.RGBA, canvas.gl.RGBA, canvas.gl.UNSIGNED_BYTE, image);
 													canvas.needRender = true;
 												};
+												image.crossOrigin = '';
 												image.src = val.href;
 											}
 											if(val.magFilter)
