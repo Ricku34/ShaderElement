@@ -27,4 +27,30 @@ First, load the latest version of ShaderElement on your HTML header page
 ```
 After that, you can declare **shader rendering surface** , directly in your `<body>` section by adding `<shader>` element
 ###Where to write GLSL code ?
-3 way to map GLSL code to a rendering surface
+3 way to map GLSL code to an rendering surface
+* Write GLSL code directly inside the `<shader>` element
+* Write and share GLSL code inside the `<script type="x-shader/x-fragment">` element in your `<head>` HTML section, and map it, to an rendering surface by an id through the src attribute 
+```html
+<head> 
+	<script type="text/javascript" src="https://ricku34.github.io/ShaderElement/ShaderElement.min.js"></script>
+	<script type="x-shader/x-fragment" id="DisplayImage">
+	uniform vec2 resolution;
+	uniform sampler2D image;	
+	
+	void main(void) 
+	{
+		gl_FragColor = texture2D(image, gl_FragCoord.xy/resolution);
+	} 
+	</script>
+</head> 
+<body>
+  <shader src="DisplayImage"
+	style="border: none; width: 300px; height: 300px"
+	image="{ href : './assets/image1.png' }"></shader>
+	
+  <shader src="DisplayImage"
+	style="border: none; width: 300px; height: 300px"
+	image="{ href : './assets/image2.png' }"></shader>
+</body>  
+```
+* Write and share GLSL code into external file 
