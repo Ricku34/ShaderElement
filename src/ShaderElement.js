@@ -26,7 +26,7 @@
 					canvas.getContext("experimental-webgl", { depth : false });
 		if (!canvas.gl) 
 		{
-			console.error("An error occurred compiling the PixelShaders: " + canvas.gl.getShaderInfoLog(fragmentShader));
+			console.error("Your navigator don't support WebGL!");
 			return false;
 		}
 		
@@ -44,7 +44,7 @@
 		canvas.gl.compileShader(vertexShader);			
 		
 		var fragmentShader = canvas.gl.createShader(canvas.gl.FRAGMENT_SHADER);
-		canvas.gl.shaderSource(fragmentShader,"precision mediump float;\n" + source );
+		canvas.gl.shaderSource(fragmentShader,"precision highp float;\n" + source );
 		canvas.gl.compileShader(fragmentShader);			
 		if(!canvas.gl.getShaderParameter(fragmentShader, canvas.gl.COMPILE_STATUS)) 
 		{
@@ -157,6 +157,7 @@
 										set : function (val)
 										{
 											this._value = val;
+											console.log(val,this.textureIndex);
 											canvas.gl.activeTexture(canvas.gl.TEXTURE0 + this.textureIndex);
 											if(val.sample)
 											{
@@ -174,15 +175,22 @@
 											else if(val.href)
 											{
 												var image = new Image();
+												image.textIndex= uniform.textureIndex;
+												//image.Location = 
+												//console.log(val.href, uniform.textureIndex);	
 												image.onload = function()
 												{
-													uniform.value.sample = image;
-													canvas.gl.activeTexture(canvas.gl.TEXTURE0 + uniform.textureIndex);
+													//uniform.value.sample = image;
+													console.log(image.src, image.textIndex);
+													
+													canvas.gl.activeTexture(canvas.gl.TEXTURE0 + image.textIndex);
 													canvas.gl.texImage2D(canvas.gl.TEXTURE_2D, 0, canvas.gl.RGBA, canvas.gl.RGBA, canvas.gl.UNSIGNED_BYTE, image);
+													//canvas.gl.uniform1i(image.Location, image.textIndex);
 													canvas.needRender = true;
 												};
 												image.crossOrigin = '';
 												image.src = val.href;
+												
 											}
 											if(val.magFilter)
 											{	
@@ -214,7 +222,7 @@
 						canvas.gl.texParameteri(canvas.gl.TEXTURE_2D, canvas.gl.TEXTURE_MIN_FILTER, canvas.gl.LINEAR);  
 						canvas.gl.texParameteri(canvas.gl.TEXTURE_2D, canvas.gl.TEXTURE_WRAP_S, canvas.gl.CLAMP_TO_EDGE);
 						canvas.gl.texParameteri(canvas.gl.TEXTURE_2D, canvas.gl.TEXTURE_WRAP_T, canvas.gl.CLAMP_TO_EDGE);
-						canvas.gl.uniform1i(uniform.Location, uniform.textureIndex);
+						canvas.gl.uniform1i(uniform.location, uniform.textureIndex);
 						break;
 					
 					case canvas.gl.FLOAT :
@@ -375,7 +383,7 @@
 			var canvas = document.createElement('canvas');
 			for(var i=0;i<shadertags[0].attributes.length;i++)
 			{
-				canvas.setAttribute(shadertags[0].attributes[i].nodeName,shadertags[0].attributes[i].nodeValue);
+				canvas.setAttribute(shadertags[0].attributes[i].nodeName,shadertags[0].attributes[i].value);
 			}
 			var shaderSource = shadertags[0].innerHTML;
 			shadertags[0].parentNode.replaceChild(canvas,shadertags[0]);
