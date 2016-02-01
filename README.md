@@ -17,3 +17,14 @@ void main(void)
 ```html
 </shader>
 ```
+
+##How to use it?
+First, load the latest version of ShaderElement on your HTML header page
+```html
+<head> 
+	<script type="text/javascript" src="https://ricku34.github.io/ShaderElement/ShaderElement.min.js"></script>
+</head> 
+```
+After that you can declare Shader Rendering surface , directly in your `<body>` section by adding `<shader>` element
+###Where to write GLSL code ?
+
