@@ -1,5 +1,5 @@
 # ShaderElement
-ShaderElement is JavaScript Library that extend HTML DOM element and makes possible beautiful rendering by writing code GLSL without JavaScript or WebGL knowledges
+ShaderElement is JavaScript Library that extended HTML DOM element and makes possible beautiful rendering by writing code GLSL without JavaScript or WebGL knowledges
 
 
 ## Sample Usage
