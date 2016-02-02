@@ -54,3 +54,10 @@ After that, you can declare **shader rendering surface** , directly in your `<bo
 </body>  
 ```
 * Write and share GLSL code into external file 
+```html
+<shader src="https://ricku34.github.io/ShaderElement/samples/Sepia.glsl"
+	style="border: none; width: 300px; height: 300px"
+	image="{ href : './assets/image1.png' }"
+	intensity="0.2"></shader>
+```
+###Uniforms

@@ -93,7 +93,7 @@
 		canvas.needRender = true;
 		
 		Shaders.push(canvas);
-		
+		return true;
 	}
 	
 	function BuildUniforms(canvas)
@@ -157,7 +157,6 @@
 										set : function (val)
 										{
 											this._value = val;
-											console.log(val,this.textureIndex);
 											canvas.gl.activeTexture(canvas.gl.TEXTURE0 + this.textureIndex);
 											if(val.sample)
 											{
@@ -181,7 +180,6 @@
 												image.onload = function()
 												{
 													//uniform.value.sample = image;
-													console.log(image.src, image.textIndex);
 													
 													canvas.gl.activeTexture(canvas.gl.TEXTURE0 + image.textIndex);
 													canvas.gl.texImage2D(canvas.gl.TEXTURE_2D, 0, canvas.gl.RGBA, canvas.gl.RGBA, canvas.gl.UNSIGNED_BYTE, image);
@@ -380,16 +378,21 @@
 		var shadertags = document.getElementsByTagName('shader');
 		while(shadertags.length)
 		{	
+			var shader = shadertags[0];
 			var canvas = document.createElement('canvas');
-			for(var i=0;i<shadertags[0].attributes.length;i++)
+			var initEvent = new CustomEvent('init', { 'detail': canvas });
+			for(var i=0;i<shader.attributes.length;i++)
 			{
-				canvas.setAttribute(shadertags[0].attributes[i].nodeName,shadertags[0].attributes[i].value);
+				canvas.setAttribute(shader.attributes[i].nodeName,shader.attributes[i].value);
 			}
-			var shaderSource = shadertags[0].innerHTML;
-			shadertags[0].parentNode.replaceChild(canvas,shadertags[0]);
+			var shaderSource = shader.innerHTML;
+			shader.parentNode.replaceChild(canvas,shader);
 			
 			if(canvas.hasAttribute('src') && document.getElementById(canvas.getAttribute('src')))
-				InitShader(canvas,document.getElementById(canvas.getAttribute('src')).textContent);
+			{
+				if(InitShader(canvas,document.getElementById(canvas.getAttribute('src')).textContent))
+					shader.dispatchEvent(initEvent);
+			}
 			else if(canvas.hasAttribute('src'))
 			{
 				var xhr = new XMLHttpRequest();
@@ -398,14 +401,17 @@
 					if ( xhr.readyState == 4 ) 
 					{
 						if ( xhr.status == 200 || xhr.status == 0 ) 
-							InitShader(canvas,xhr.responseText);
-						 else 
-							InitShader(canvas,shaderSource);
+						{
+							if(InitShader(canvas,xhr.responseText))
+								shader.dispatchEvent(initEvent);
+						}		
+						else if(InitShader(canvas,shaderSource))
+							shader.dispatchEvent(initEvent);
 					}
 				};
 				try
 				{
-					xhr.open( "GET", canvas.getAttribute('src'), false );
+					xhr.open( "GET", canvas.getAttribute('src'), true );
 					xhr.send( null );
 				} 
 				catch (error)
@@ -413,8 +419,8 @@
 					console.error(error);
 				}
 			}
-			else
-				InitShader(canvas,shaderSource);
+			else if(InitShader(canvas,shaderSource))
+					shader.dispatchEvent(initEvent);
 		}
 					
 		RenderLoop();
