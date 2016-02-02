@@ -1,20 +1,16 @@
 # ShaderElement
-Write PixelShader in GLSL directly inside an HTML document, using WebGL context of an canvas 
+ShaderElement is JavaScript Library that extend HTML DOM element and makes possible beautiful rendering by writing code GLSL without JavaScript or WebGL knowledges
 
 
 ## Sample Usage
-```html
-<shader style="border: none; width: 300px; height: 300px" color="[0.0, 0.0, 1.0, 1.0]">
-```
 ```glsl
+<shader style="border: none; width: 300px; height: 300px" color="[0.0, 0.0, 1.0, 1.0]">
 uniform vec4 color;
 
 void main(void) 
 {
 	gl_FragColor = color;
 }
-```
-```html
 </shader>
 ```
 
@@ -67,11 +63,7 @@ the built-in Uniforms are automatically managed for you, to use it you just need
 
 Uniforms | Description
 -------- | -----------
-uniform float time; | elapsed time in seconds
-uniform vec2 resolution; | the dimensions in pixel of the rendering surface
+`uniform float time;` | elapsed time in seconds
+`uniform vec2 resolution;` | the dimensions in pixel of the rendering surface
 
-First Header | Second Header
------------- | -------------
-Content from cell 1 | Content from cell 2
-Content in the first column | Content in the second column
 
