@@ -62,10 +62,15 @@ After that, you can declare **shader rendering surface** , directly in your `<bo
 ```
 ###Uniforms
 they have 2 sorte of Uniforms:
-###Built-in Uniforms
+####Built-in Uniforms
 the built-in Uniforms are automatically managed for you, to use it you just need to declare it in GLSL code   
 Uniforms | Description
 -------- | -----------
 `uniform float time;`| elapsed time in seconds
 `uniform vec2 resolution;` | the dimensions in pixel of the rendering surface
+
+First Header | Second Header
+------------ | -------------
+Content from cell 1 | Content from cell 2
+Content in the first column | Content in the second column
 
