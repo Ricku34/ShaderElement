@@ -1,28 +1,40 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html>
   <head>
-    <meta charset="UTF-8">
-    <title>ShaderElement by Ricku34</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>ShaderElement by Ricku34</title>
   </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">ShaderElement</h1>
-      <h2 class="project-tagline">Write PixelShader in GLSL directly inside an HTML document, using WebGL context of an canvas</h2>
-      <a href="https://github.com/Ricku34/ShaderElement" class="btn">View on GitHub</a>
-      <a href="https://github.com/Ricku34/ShaderElement/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/Ricku34/ShaderElement/tarball/master" class="btn">Download .tar.gz</a>
-    </section>
 
-    <section class="main-content">
-      <h1>
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>ShaderElement</h1>
+          <h2>Write PixelShader in GLSL directly inside an HTML document, using WebGL context of an canvas</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/Ricku34/ShaderElement/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/Ricku34/ShaderElement/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/Ricku34/ShaderElement" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
 <a id="shaderelement" class="anchor" href="#shaderelement" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ShaderElement</h1>
 
-<p><a href="http://ricku34.github.io/ShaderElement/">ShaderElement!</a> is JavaScript Library that extended HTML DOM element and makes possible beautiful rendering by writing code <a href="https://www.opengl.org/registry/doc/GLSLangSpec.Full.1.20.8.pdf">GLSL!</a> without JavaScript or WebGL knowledges</p>
+<p><a href="http://ricku34.github.io/ShaderElement/">ShaderElement</a> is JavaScript Library that extended HTML DOM element and makes possible beautiful rendering by writing code <a href="https://www.opengl.org/registry/doc/GLSLangSpec.Full.1.20.8.pdf">GLSL</a> without JavaScript or WebGL knowledges</p>
 
 <h2>
 <a id="sample-usage" class="anchor" href="#sample-usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sample Usage</h2>
@@ -37,6 +49,18 @@
 &lt;/shader&gt;</pre></div>
 
 <h2>
+<a id="sample-list" class="anchor" href="#sample-list" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sample List</h2>
+
+<ul>
+<li>
+<a href="http://ricku34.github.io/ShaderElement/samples/Colors.html">Colors.html</a> : Simple 2D fill shader without any assets</li>
+<li>
+<a href="http://ricku34.github.io/ShaderElement/samples/Images.html">Images.html</a> : shaders working  vith  images as custom uniform</li>
+<li>
+<a href="http://ricku34.github.io/ShaderElement/samples/Sepia.html">Sepia.html</a> : Sepia filter into an extenal GLSL file, show how to update uniform in <strong>JavaScript</strong> </li>
+</ul>
+
+<h2>
 <a id="how-to-use-it" class="anchor" href="#how-to-use-it" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to use it?</h2>
 
 <p>First, load the latest version of ShaderElement on your HTML header page</p>
@@ -48,13 +72,13 @@
 <p>After that, you can declare <strong>shader rendering surface</strong> , directly in your <code>&lt;body&gt;</code> section by adding <code>&lt;shader&gt;</code> element</p>
 
 <h3>
-<a id="where-to-write-glsl-code-" class="anchor" href="#where-to-write-glsl-code-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Where to write <a href="https://www.opengl.org/registry/doc/GLSLangSpec.Full.1.20.8.pdf">GLSL!</a> code ?</h3>
+<a id="where-to-write-glsl-code-" class="anchor" href="#where-to-write-glsl-code-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Where to write <a href="https://www.opengl.org/registry/doc/GLSLangSpec.Full.1.20.8.pdf">GLSL</a> code ?</h3>
 
-<p>3 way to map <a href="https://www.opengl.org/registry/doc/GLSLangSpec.Full.1.20.8.pdf">GLSL!</a> code to an rendering surface</p>
+<p>3 way to map <a href="https://www.opengl.org/registry/doc/GLSLangSpec.Full.1.20.8.pdf">GLSL</a> code to an rendering surface</p>
 
 <ul>
-<li>Write <a href="https://www.opengl.org/registry/doc/GLSLangSpec.Full.1.20.8.pdf">GLSL!</a> code directly inside the <code>&lt;shader&gt;</code> element</li>
-<li>Write and share <a href="https://www.opengl.org/registry/doc/GLSLangSpec.Full.1.20.8.pdf">GLSL!</a> code inside the <code>&lt;script type="x-shader/x-fragment"&gt;</code> element in your <code>&lt;head&gt;</code> HTML section, and map it, to an rendering surface by an id through the src attribute </li>
+<li>Write <a href="https://www.opengl.org/registry/doc/GLSLangSpec.Full.1.20.8.pdf">GLSL</a> code directly inside the <code>&lt;shader&gt;</code> element</li>
+<li>Write and share <a href="https://www.opengl.org/registry/doc/GLSLangSpec.Full.1.20.8.pdf">GLSL</a> code inside the <code>&lt;script type="x-shader/x-fragment"&gt;</code> element in your <code>&lt;head&gt;</code> HTML section, and map it, to an rendering surface by an id through the src attribute </li>
 </ul>
 
 <div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">head</span>&gt; 
@@ -80,7 +104,7 @@
 &lt;/<span class="pl-ent">body</span>&gt;  </pre></div>
 
 <ul>
-<li>Write and share <a href="https://www.opengl.org/registry/doc/GLSLangSpec.Full.1.20.8.pdf">GLSL!</a> code into external file </li>
+<li>Write and share <a href="https://www.opengl.org/registry/doc/GLSLangSpec.Full.1.20.8.pdf">GLSL</a> code into external file </li>
 </ul>
 
 <div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">shader</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>https://ricku34.github.io/ShaderElement/samples/Sepia.glsl<span class="pl-pds">"</span></span>
@@ -96,7 +120,7 @@
 <h4>
 <a id="built-in-uniforms" class="anchor" href="#built-in-uniforms" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Built-in Uniforms</h4>
 
-<p>the built-in Uniforms are automatically managed for you, to use it you just need to declare it in <a href="https://www.opengl.org/registry/doc/GLSLangSpec.Full.1.20.8.pdf">GLSL!</a> code   </p>
+<p>the built-in Uniforms are automatically managed for you, to use it you just need to declare it in <a href="https://www.opengl.org/registry/doc/GLSLangSpec.Full.1.20.8.pdf">GLSL</a> code   </p>
 
 <table>
 <thead>
@@ -116,15 +140,15 @@
 </tr>
 </tbody>
 </table>
+        </section>
 
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/Ricku34/ShaderElement">ShaderElement</a> is maintained by <a href="https://github.com/Ricku34">Ricku34</a>.</span>
+        <footer>
+          ShaderElement is maintained by <a href="https://github.com/Ricku34">Ricku34</a><br>
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
 
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
-
-    </section>
-
-  
+        
+      </div>
+    </div>
   </body>
 </html>
