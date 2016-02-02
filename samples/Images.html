@@ -1,0 +1,61 @@
+<html>
+<head> 
+	<script type="text/javascript" src="../src/ShaderElement.js"></script>
+	<script type="x-shader/x-fragment" id="Sampler2Dshader">
+	uniform vec2 resolution;
+	uniform sampler2D image;	
+	
+	void main(void) 
+	{
+		vec2 position =  2.0*gl_FragCoord.xy/resolution - vec2(1.0);
+		gl_FragColor = texture2D(image, position);
+	} 
+	</script>
+</head>
+<body style="text-align : center">
+  <shader src="Sampler2Dshader"
+	style="border: none; width: 300px; height: 300px"
+	image="{ href : './assets/image1.png' }"></shader>
+	
+  <shader src="Sampler2Dshader" style="border: none; width: 300px; height: 300px"
+	image="{ href : './assets/image1.png' , wrapS : 'MIRRORED_REPEAT' , wrapT : 'CLAMP_TO_EDGE' }" >
+  </shader>
+  
+  <br/>
+  
+  
+  <br/>
+   <shader style="border: none; width: 500px; height: 500px"
+	image="{ href : './assets/image2.png', wrapS : 'MIRRORED_REPEAT' , wrapT : 'MIRRORED_REPEAT' }" 
+	matrix=" [  Math.cos(Math.PI/4) ,  -Math.sin(Math.PI/4), 
+				Math.sin(Math.PI/4), 	Math.cos(Math.PI/4) ]">
+	uniform vec2 resolution;
+	uniform mat2 matrix;	
+	uniform sampler2D image;
+	
+	void main(void) 
+	{
+		vec2 position =  2.0*gl_FragCoord.xy/resolution - vec2(1.0);
+		gl_FragColor = texture2D(image, matrix*position);
+	} 
+  </shader>
+ <shader style="border: none; width: 500px; height: 500px"
+	image1="{ href : './assets/image1.png' }" image2="{ href : './assets/image2.png' }"
+  >
+	uniform sampler2D image1;
+	uniform sampler2D image2;
+	uniform vec2 resolution;
+	uniform float time;
+	void main(void) 
+	{
+		float t = (cos(time)+1.0)/2.0;
+		vec2 p = gl_FragCoord.xy/resolution;
+		vec4 frontPixel= texture2D(image1, p);
+		vec4 backPixel = texture2D(image2, p);
+		gl_FragColor = mix(backPixel,frontPixel,t);	
+	} 
+  </shader>
+  
+  
+</body>
+</html>

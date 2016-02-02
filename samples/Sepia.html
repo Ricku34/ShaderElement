@@ -1,0 +1,36 @@
+<html>
+<head> 
+	<script type="text/javascript" src="../src/ShaderElement.js"></script>
+</head>
+<body >
+<center>
+	<table>
+	<tr>
+	<td colspan="2">
+	  <shader id="Sepia" src="Sepia.glsl"
+		style="border: none; width: 500px; height: 500px"
+		image="{ href : './assets/image1.png' }"
+		intensity="0.2"></shader>
+	</td>
+	</tr>
+	<tr>
+	<td>intensity :</td>
+	<td><input id="intensity" type="range" value="20" max="100" min="0" step="5"/></td>
+	</tr>
+	</table>
+	<script>
+	var input = document.getElementById("intensity");
+	var shader = document.getElementById("Sepia");
+	shader.addEventListener('init',function(evt)
+	{	//Init event is call when the shader is ready 
+		shader = evt.detail;// got the new ref of the extended DOM canvas element
+		shader.uniforms.intensity.value = (+input.value)/100;
+		input.addEventListener('change',function()
+		{
+			shader.uniforms.intensity.value = (+input.value)/100;
+		},false)
+	},false)
+	</script>
+</center>
+</body>
+</html>
