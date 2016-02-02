@@ -61,9 +61,10 @@ After that, you can declare **shader rendering surface** , directly in your `<bo
 	intensity="0.2"></shader>
 ```
 ###Uniforms
-they have 2 sorte of Uniforms:
+they are 2 kind of Uniforms::
 ####Built-in Uniforms
 the built-in Uniforms are automatically managed for you, to use it you just need to declare it in GLSL code   
+
 Uniforms | Description
 -------- | -----------
 uniform float time; | elapsed time in seconds
