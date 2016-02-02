@@ -63,7 +63,9 @@ the built-in Uniforms are automatically managed for you, to use it you just need
 
 Uniforms | Description
 -------- | -----------
-`uniform float time;` | elapsed time in seconds
+```glsl
+uniform float time;
+``` | elapsed time in seconds
 `uniform vec2 resolution;` | the dimensions in pixel of the rendering surface
 
 
