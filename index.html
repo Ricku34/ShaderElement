@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Shaderelement by Ricku34</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Shaderelement</h1>
+          <h2>Write PixelShader in GLSL directly inside an HTML document, using WebGL context of an canvas</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/Ricku34/ShaderElement/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/Ricku34/ShaderElement/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/Ricku34/ShaderElement" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a id="shaderelement" class="anchor" href="#shaderelement" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ShaderElement</h1>
+
+<p>ShaderElement is JavaScript Library that extend HTML DOM element and makes possible beautiful rendering by writing code GLSL without JavaScript or WebGL knowledges</p>
+
+<h2>
+<a id="sample-usage" class="anchor" href="#sample-usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sample Usage</h2>
+
+<div class="highlight highlight-source-glsl"><pre>&lt;shader style=<span class="pl-s"><span class="pl-pds">"</span>border: none; width: 300px; height: 300px<span class="pl-pds">"</span></span> color=<span class="pl-s"><span class="pl-pds">"</span>[0.0, 0.0, 1.0, 1.0]<span class="pl-pds">"</span></span>&gt;
+<span class="pl-k">uniform</span> <span class="pl-k">vec4</span> color;
+
+<span class="pl-k">void</span> <span class="pl-en">main</span>(<span class="pl-k">void</span>) 
+{
+    <span class="pl-c1">gl_FragColor</span> = color;
+}
+&lt;/shader&gt;</pre></div>
+
+<h2>
+<a id="how-to-use-it" class="anchor" href="#how-to-use-it" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to use it?</h2>
+
+<p>First, load the latest version of ShaderElement on your HTML header page</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">head</span>&gt; 
+<span class="pl-s1">    &lt;<span class="pl-ent">script</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text/javascript<span class="pl-pds">"</span></span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>https://ricku34.github.io/ShaderElement/ShaderElement.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</span>
+&lt;/<span class="pl-ent">head</span>&gt; </pre></div>
+
+<p>After that, you can declare <strong>shader rendering surface</strong> , directly in your <code>&lt;body&gt;</code> section by adding <code>&lt;shader&gt;</code> element</p>
+
+<h3>
+<a id="where-to-write-glsl-code-" class="anchor" href="#where-to-write-glsl-code-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Where to write GLSL code ?</h3>
+
+<p>3 way to map GLSL code to an rendering surface</p>
+
+<ul>
+<li>Write GLSL code directly inside the <code>&lt;shader&gt;</code> element</li>
+<li>Write and share GLSL code inside the <code>&lt;script type="x-shader/x-fragment"&gt;</code> element in your <code>&lt;head&gt;</code> HTML section, and map it, to an rendering surface by an id through the src attribute </li>
+</ul>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">head</span>&gt; 
+<span class="pl-s1">    &lt;<span class="pl-ent">script</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>text/javascript<span class="pl-pds">"</span></span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>https://ricku34.github.io/ShaderElement/ShaderElement.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</span>
+<span class="pl-s1">    &lt;<span class="pl-ent">script</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>x-shader/x-fragment<span class="pl-pds">"</span></span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>DisplayImage<span class="pl-pds">"</span></span>&gt;</span>
+<span class="pl-s1">    uniform vec2 resolution;</span>
+<span class="pl-s1">    uniform sampler2D image;    </span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    <span class="pl-k">void</span> <span class="pl-en">main</span>(<span class="pl-k">void</span>) </span>
+<span class="pl-s1">    {</span>
+<span class="pl-s1">        gl_FragColor <span class="pl-k">=</span> <span class="pl-en">texture2D</span>(image, <span class="pl-smi">gl_FragCoord</span>.<span class="pl-smi">xy</span><span class="pl-k">/</span>resolution);</span>
+<span class="pl-s1">    } </span>
+<span class="pl-s1">    &lt;/<span class="pl-ent">script</span>&gt;</span>
+&lt;/<span class="pl-ent">head</span>&gt; 
+&lt;<span class="pl-ent">body</span>&gt;
+  &lt;<span class="pl-ent">shader</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>DisplayImage<span class="pl-pds">"</span></span>
+    <span class="pl-e">style</span>=<span class="pl-s"><span class="pl-pds">"</span>border: none; width: 300px; height: 300px<span class="pl-pds">"</span></span>
+    <span class="pl-e">image</span>=<span class="pl-s"><span class="pl-pds">"</span>{ href : './assets/image1.png' }<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">shader</span>&gt;
+
+  &lt;<span class="pl-ent">shader</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>DisplayImage<span class="pl-pds">"</span></span>
+    <span class="pl-e">style</span>=<span class="pl-s"><span class="pl-pds">"</span>border: none; width: 300px; height: 300px<span class="pl-pds">"</span></span>
+    <span class="pl-e">image</span>=<span class="pl-s"><span class="pl-pds">"</span>{ href : './assets/image2.png' }<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">shader</span>&gt;
+&lt;/<span class="pl-ent">body</span>&gt;  </pre></div>
+
+<ul>
+<li>Write and share GLSL code into external file </li>
+</ul>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">shader</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>https://ricku34.github.io/ShaderElement/samples/Sepia.glsl<span class="pl-pds">"</span></span>
+    <span class="pl-e">style</span>=<span class="pl-s"><span class="pl-pds">"</span>border: none; width: 300px; height: 300px<span class="pl-pds">"</span></span>
+    <span class="pl-e">image</span>=<span class="pl-s"><span class="pl-pds">"</span>{ href : './assets/image1.png' }<span class="pl-pds">"</span></span>
+    <span class="pl-e">intensity</span>=<span class="pl-s"><span class="pl-pds">"</span>0.2<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">shader</span>&gt;</pre></div>
+
+<h3>
+<a id="uniforms" class="anchor" href="#uniforms" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Uniforms</h3>
+
+<p>they are 2 kind of Uniforms::</p>
+
+<h4>
+<a id="built-in-uniforms" class="anchor" href="#built-in-uniforms" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Built-in Uniforms</h4>
+
+<p>the built-in Uniforms are automatically managed for you, to use it you just need to declare it in GLSL code   </p>
+
+<table>
+<thead>
+<tr>
+<th>Uniforms</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>uniform float time;</code></td>
+<td>elapsed time in seconds</td>
+</tr>
+<tr>
+<td><code>uniform vec2 resolution;</code></td>
+<td>the dimensions in pixel of the rendering surface</td>
+</tr>
+</tbody>
+</table>
+        </section>
+
+        <footer>
+          Shaderelement is maintained by <a href="https://github.com/Ricku34">Ricku34</a><br>
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
