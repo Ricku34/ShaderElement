@@ -13,6 +13,9 @@ void main(void)
 }
 </shader>
 ```
+## Sample List
+ * [Colors.html!](http://ricku34.github.io/ShaderElement/Colors.html) : Simple 2D fill shader without any assets
+ * [Images.html!](http://ricku34.github.io/ShaderElement/Images.html) : shaders working  vith  images as custom uniform
 
 ##How to use it?
 First, load the latest version of ShaderElement on your HTML header page
@@ -63,9 +66,7 @@ the built-in Uniforms are automatically managed for you, to use it you just need
 
 Uniforms | Description
 -------- | -----------
-```glsl
-uniform float time;
-``` | elapsed time in seconds
+`uniform float time;` | elapsed time in seconds
 `uniform vec2 resolution;` | the dimensions in pixel of the rendering surface
 
 
