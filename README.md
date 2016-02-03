@@ -22,7 +22,7 @@ void main(void)
 First, load the latest version of ShaderElement on your HTML header page
 ```html
 <head> 
-	<script type="text/javascript" src="https://ricku34.github.io/ShaderElement/ShaderElement.min.js"></script>
+	<script type="text/javascript" src="http://ricku34.github.io/ShaderElement/build/ShaderElement.min.js"></script>
 </head> 
 ```
 After that, you can declare **shader rendering surface** , directly in your `<body>` section by adding `<shader>` element
