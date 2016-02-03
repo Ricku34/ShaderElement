@@ -44,7 +44,7 @@
 		canvas.gl.compileShader(vertexShader);			
 		
 		var fragmentShader = canvas.gl.createShader(canvas.gl.FRAGMENT_SHADER);
-		canvas.gl.shaderSource(fragmentShader,"precision highp float;\n" + source );
+		canvas.gl.shaderSource(fragmentShader,"precision highp float;\n" + source.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&') );
 		canvas.gl.compileShader(fragmentShader);			
 		if(!canvas.gl.getShaderParameter(fragmentShader, canvas.gl.COMPILE_STATUS)) 
 		{
@@ -90,6 +90,11 @@
 		};
 		
 		canvas.resizeShader();
+		window.addEventListener("resize",function()
+		{
+			if(canvas.width != canvas.scrollWidth || canvas.height != canvas.scrollHeight)
+				canvas.resizeShader();	
+		},false)
 		canvas.needRender = true;
 		
 		Shaders.push(canvas);
@@ -426,28 +431,23 @@
 		RenderLoop();
 	});
 	
-	var StartTime = (new Date()).getTime();
+	var StartTime = Date.now();
 	var LastTime = null;
 	
 	function RenderLoop()
 	{
 		requestAnimationFrame(RenderLoop);
-		var currentTime = ((new Date()).getTime()-StartTime)/1000;
-		var deltaTime = (LastTime!==null)? currentTime-LastTime : 0;
+		var currentTime = (Date.now()-StartTime)/1000;
 		for(var i=0;i<Shaders.length;i++)
 		{	
 			if(Shaders[i].uniforms["time"])
 				Shaders[i].uniforms.time.value = currentTime;
-			
-			if(Shaders[i].uniforms["deltatime"])
-				Shaders[i].uniforms.deltatime.value = deltaTime;
 				
 			if(Shaders[i].needRender)
 			{
 				Shaders[i].renderShader();	
 			}
 		}
-		LastTime = currentTime;
 	}
 
 	

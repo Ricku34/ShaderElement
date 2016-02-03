@@ -14,7 +14,7 @@ void main(void)
 </shader>
 ```
 ## Sample List
- * [Colors.html](http://ricku34.github.io/ShaderElement/samples/Colors.html) : Simple 2D fill shader without any assets
+ * [Colors.html](http://ricku34.github.io/ShaderElement/samples/Colors.html) : Simple 2D fill shaders without any assets
  * [Images.html](http://ricku34.github.io/ShaderElement/samples/Images.html) : shaders working  vith  images as custom uniform
  * [Sepia.html](http://ricku34.github.io/ShaderElement/samples/Sepia.html) : Sepia filter into an extenal GLSL file, show how to update uniform in **JavaScript** 
  
@@ -69,5 +69,17 @@ Uniforms | Description
 -------- | -----------
 `uniform float time;` | elapsed time in seconds
 `uniform vec2 resolution;` | the dimensions in pixel of the rendering surface
+
+####Custom Uniforms
+Custom Uniforms can be initialized directly by DOM attibut inside the shader tag, the attribut value must be a valide JSON.
+follow the correspondence table of types below :
+
+GSL | JavaScript | HTML 
+--- | ---------- | ----
+`bool` | `Boolean` | `<shader shadow="false"/>`
+`float` | `Number` | `<shader inrensity="0.8"/>`
+`vec2` | `Array` | `<shader UpVector="[0, -1]"/>`
+`vec3` | `Array` | `<shader AtVector="[0, 0, 1]"/>`
+`mat4` | `Array` | `<shader  model="[1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]"/>`
 
 
