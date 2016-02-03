@@ -32,7 +32,7 @@ After that, you can declare **shader rendering surface** , directly in your `<bo
 * Write and share [GLSL](https://www.opengl.org/registry/doc/GLSLangSpec.Full.1.20.8.pdf) code inside the `<script type="x-shader/x-fragment">` element in your `<head>` HTML section, and map it, to an rendering surface by an id through the src attribute 
 ```html
 <head> 
-	<script type="text/javascript" src="https://ricku34.github.io/ShaderElement/ShaderElement.min.js"></script>
+	<script type="text/javascript" src="http://ricku34.github.io/ShaderElement/build/ShaderElement.min.js"></script>
 	<script type="x-shader/x-fragment" id="DisplayImage">
 	uniform vec2 resolution;
 	uniform sampler2D image;	
