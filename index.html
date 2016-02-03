@@ -53,7 +53,7 @@
 
 <ul>
 <li>
-<a href="http://ricku34.github.io/ShaderElement/samples/Colors.html">Colors.html</a> : Simple 2D fill shader without any assets</li>
+<a href="http://ricku34.github.io/ShaderElement/samples/Colors.html">Colors.html</a> : Simple 2D fill shaders without any assets</li>
 <li>
 <a href="http://ricku34.github.io/ShaderElement/samples/Images.html">Images.html</a> : shaders working  vith  images as custom uniform</li>
 <li>
@@ -137,6 +137,49 @@
 <tr>
 <td><code>uniform vec2 resolution;</code></td>
 <td>the dimensions in pixel of the rendering surface</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
+<a id="custom-uniforms" class="anchor" href="#custom-uniforms" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Custom Uniforms</h4>
+
+<p>Custom Uniforms can be initialized directly by DOM attibut inside the shader tag, the attribut value must be a valide JSON.
+follow the correspondence table of types below :</p>
+
+<table>
+<thead>
+<tr>
+<th>GSL</th>
+<th>JavaScript</th>
+<th>HTML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bool</code></td>
+<td><code>Boolean</code></td>
+<td><code>&lt;shader shadow="false"/&gt;</code></td>
+</tr>
+<tr>
+<td><code>float</code></td>
+<td><code>Number</code></td>
+<td><code>&lt;shader inrensity="0.8"/&gt;</code></td>
+</tr>
+<tr>
+<td><code>vec2</code></td>
+<td><code>Array</code></td>
+<td><code>&lt;shader UpVector="[0, -1]"/&gt;</code></td>
+</tr>
+<tr>
+<td><code>vec3</code></td>
+<td><code>Array</code></td>
+<td><code>&lt;shader AtVector="[0, 0, 1]"/&gt;</code></td>
+</tr>
+<tr>
+<td><code>mat4</code></td>
+<td><code>Array</code></td>
+<td><code>&lt;shader  model="[1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]"/&gt;</code></td>
 </tr>
 </tbody>
 </table>
