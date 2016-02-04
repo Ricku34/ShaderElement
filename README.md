@@ -22,7 +22,7 @@ void main(void)
 First, load the latest version of ShaderElement on your HTML header page
 ```html
 <head> 
-	<script type="text/javascript" src="https://ricku34.github.io/ShaderElement/ShaderElement.min.js"></script>
+	<script type="text/javascript" src="http://ricku34.github.io/ShaderElement/build/ShaderElement.min.js"></script>
 </head> 
 ```
 After that, you can declare **shader rendering surface** , directly in your `<body>` section by adding `<shader>` element
@@ -32,7 +32,7 @@ After that, you can declare **shader rendering surface** , directly in your `<bo
 * Write and share [GLSL](https://www.opengl.org/registry/doc/GLSLangSpec.Full.1.20.8.pdf) code inside the `<script type="x-shader/x-fragment">` element in your `<head>` HTML section, and map it, to an rendering surface by an id through the src attribute 
 ```html
 <head> 
-	<script type="text/javascript" src="https://ricku34.github.io/ShaderElement/ShaderElement.min.js"></script>
+	<script type="text/javascript" src="http://ricku34.github.io/ShaderElement/build/ShaderElement.min.js"></script>
 	<script type="x-shader/x-fragment" id="DisplayImage">
 	uniform vec2 resolution;
 	uniform sampler2D image;	
@@ -61,7 +61,7 @@ After that, you can declare **shader rendering surface** , directly in your `<bo
 	intensity="0.2"></shader>
 ```
 ###Uniforms
-they are 2 kind of Uniforms::
+they are 2 kind of Uniforms:
 ####Built-in Uniforms
 the built-in Uniforms are automatically managed for you, to use it you just need to declare it in [GLSL](https://www.opengl.org/registry/doc/GLSLangSpec.Full.1.20.8.pdf) code   
 
@@ -81,5 +81,29 @@ GSL | JavaScript | HTML
 `vec2` | `Array` | `<shader UpVector="[0, -1]"/>`
 `vec3` | `Array` | `<shader AtVector="[0, 0, 1]"/>`
 `mat4` | `Array` | `<shader  model="[1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]"/>`
+`sampler2D` | `Object` | `<shader image="{ href : './image.png' , wrapS : 'MIRRORED_REPEAT' , wrapT : 'REPEAT' }"/>`
 
+####Sampler Javascript Object
+Here is the list of properties expected for a Sampler JSON :
+
+Name | Type | default value | description
+---- | ---- | ------------- | -----------
+**sample** | `Image` | n/a | Image in RGBA
+**sample** | `canvas` | n/a | the rasterize result of an canvas
+**sample** | `String` | n/a |  the id of an existing DOM Image or canvas Element
+**href** | `String` | n/a | the location of an image 
+**wrapS** | `String` | 'CLAMP_TO_EDGE' | must be one of this :  'CLAMP_TO_EDGE', 'REPEAT' or 'MIRRORED_REPEAT'
+**wrapT** | `String` | 'CLAMP_TO_EDGE' | must be one of this :  'CLAMP_TO_EDGE', 'REPEAT' or 'MIRRORED_REPEAT'
+**magFilter** | `String` | 'LINEAR' | must be one of this :  'LINEAR' or 'NEAREST'
+**minFilter** | `String` | 'LINEAR' | must be one of this :  'LINEAR' or 'NEAREST'
+
+
+## Task List
+
+- [ ] samplerCube` uniform support
+- [ ] Video support
+- [ ] add  mouse event as built-in uniform
+- [ ] add  touch event as built-in uniform
+- [ ] add  gamepad event as built-in uniform
+- [ ] add  keyboard event as built-in uniform
 
