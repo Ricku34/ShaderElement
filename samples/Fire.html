@@ -1,0 +1,76 @@
+<html>
+<head> 
+	<script type="text/javascript" src="../src/ShaderElement.js"></script>
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<style>
+		body {
+			font-family: Monospace;
+			font-size : 18pt;
+			background-color: #000;
+			color: #fff;
+			margin: 0px;
+			overflow: hidden;
+		}		
+	</style>
+</head>
+<body>
+	<shader src="Calanque.glsl"
+		style="border: 0;padding:0; width: 100%; height: 100%"
+		image="{ href : './assets/noise.png' , wrapS : 'MIRRORED_REPEAT' , wrapT : 'MIRRORED_REPEAT' }"
+		FlameTone="[50, 5, 1]" Speed="8" yOffset="0.1" yScale="0.25"
+	>
+#define ITERATIONS 12
+#define DISPLACEMENT 0.05
+#define TIGHTNESS 10.0
+
+uniform float yOffset; 
+uniform float yScale; 
+uniform float Speed;
+uniform vec3 FlameTone;
+
+uniform sampler2D image;
+uniform vec2 resolution;
+uniform float time;
+float shape(in vec2 pos) // a blob shape to distort
+{
+	return clamp( sin(pos.x*3.1416) - pos.y+yOffset, 0.0, 1.0 );
+}
+
+float noise( in vec3 x ) // iq noise function
+{
+	vec3 p = floor(x);
+    vec3 f = fract(x);
+	f = f*f*(3.0-2.0*f);
+	vec2 uv = (p.xy+vec2(37.0,17.0)*p.z) + f.xy;
+	vec2 rg = texture2D( image, (uv+ 0.5)/256.0, -100.0 ).yx;
+	return mix( rg.x, rg.y, f.z ) * 2.0 - 1.0;
+}
+
+void main() 
+{
+	vec2 uv = gl_FragCoord.xy / resolution;
+	float nx = 0.0;
+	float ny = 0.0;
+	for (int i=1; i<ITERATIONS+1; i++)
+	{
+		float ii = pow(float(i), 2.0);
+		float ifrac = float(i)/float(ITERATIONS);
+		float t = ifrac * time * Speed;
+		float d = (1.0-ifrac) * DISPLACEMENT;
+		nx += noise( vec3(uv.x*ii-time*ifrac, uv.y*yScale*ii-t, 0.0)) * d * 2.0;
+		ny += noise( vec3(uv.x*ii+time*ifrac, uv.y*yScale*ii-t, time*ifrac/ii)) * d;
+	}
+	float flame = shape( vec2(uv.x+nx, uv.y+ny) );
+	vec3 col = pow(flame, TIGHTNESS) * FlameTone;
+    
+    // tonemapping
+    col = col / (1.0+col);
+    col = pow(col, vec3(1.0/2.2));
+    col = clamp(col, 0.0, 1.0);
+	
+	gl_FragColor = vec4(col, 1.0);
+}
+	</shader>
+
+</body>
+</html>
