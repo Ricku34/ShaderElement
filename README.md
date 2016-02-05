@@ -17,6 +17,8 @@ void main(void)
  * [Colors.html](http://ricku34.github.io/ShaderElement/samples/Colors.html) : Simple 2D fill shaders without any assets
  * [Images.html](http://ricku34.github.io/ShaderElement/samples/Images.html) : shaders working  vith  images as custom uniform
  * [Sepia.html](http://ricku34.github.io/ShaderElement/samples/Sepia.html) : Sepia filter into an extenal GLSL file, show how to update uniform in **JavaScript** 
+ * [Fire.html](http://ricku34.github.io/ShaderElement/samples/Fire.html) : Flame effect using  noise function.
+ * [La Calanque](http://ricku34.github.io/ShaderElement/samples/Calanque.html) : Nice real-time raytracing of calanque place (shader written by **XT95**) .
  
 ##How to use it?
 First, load the latest version of ShaderElement on your HTML header page
