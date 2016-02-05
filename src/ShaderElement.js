@@ -31,6 +31,9 @@
 		}
 		
 		canvas.gl.disable( canvas.gl.CULL_FACE );
+		canvas.gl.enable( canvas.gl.BLEND );
+		canvas.gl.blendEquation( canvas.gl.FUNC_ADD );
+		canvas.gl.blendFunc( canvas.gl.SRC_ALPHA, canvas.gl.ONE_MINUS_SRC_ALPHA );
 		canvas.gl.pixelStorei(canvas.gl.PACK_ALIGNMENT,                     1);
 		canvas.gl.pixelStorei(canvas.gl.UNPACK_ALIGNMENT,                   1);
 		canvas.gl.pixelStorei(canvas.gl.UNPACK_FLIP_Y_WEBGL,                true);
