@@ -260,8 +260,10 @@
 											}
 											else if(val.href && val.href.length==6)
 											{
+												val.sample = new Array(6);
+												val.cubeCount = 0;
 												for (var i = 0; i < 6; i++)
-												(function (cubeIndex)
+												(function (cubeIndex,name)
 												{
 													var image = new Image();
 													image.textIndex= uniform.textureIndex;
@@ -269,14 +271,20 @@
 													//console.log(val.href, uniform.textureIndex);	
 													image.onload = function()
 													{
-														canvas.gl.activeTexture(canvas.gl.TEXTURE0 + image.textIndex);
+														val.sample[cubeIndex] = image;
+														val.cubeCount++;
+														if(val.cubeCount == 6)
+														{
+															canvas.uniforms[name].value = val;
+														}
+														/*canvas.gl.activeTexture(canvas.gl.TEXTURE0 + image.textIndex);
 														console.log(val.href, cubeIndex);
 														gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_X + cubeIndex, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
-														canvas.needRender = true;
+														canvas.needRender = true;*/
 													};
 													image.crossOrigin = '';
 													image.src = val.href[i];
-												})(i)
+												})(i,info.name)
 												
 											}
 											if(val.magFilter)
