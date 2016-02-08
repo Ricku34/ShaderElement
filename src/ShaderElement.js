@@ -231,6 +231,87 @@
 						canvas.gl.uniform1i(uniform.location, uniform.textureIndex);
 						break;
 					
+					case canvas.gl.SAMPLER_CUBE :
+						var uniform = Object.create(Object.prototype,
+						{ 
+							type :  { value : "samplerCube", enumerable : true },
+							textureIndex :  { value : canvas.textureCount++, enumerable : true },
+							location :  { value : canvas.gl.getUniformLocation(canvas.shaderProgram, info.name),enumerable : true },
+							value :  {  enumerable : true,
+										get : function() { return this._value;},
+										set : function (val)
+										{
+											this._value = val;
+											canvas.gl.activeTexture(canvas.gl.TEXTURE0 + this.textureIndex);
+											if(val.sample && val.sample.length==6)
+											{
+												if(typeof val.sample[0] === 'string' && document.getElementById(val.sample[0]))
+												{
+													for (var i = 0; i < 6; i++)
+														gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, document.getElementById(val.sample[i]));
+													canvas.needRender = true;
+												}
+												else
+												{
+													for (var i = 0; i < 6; i++)
+														gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, val.sample[i]);
+													canvas.needRender = true;
+												}
+											}
+											else if(val.href && val.href.length==6)
+											{
+												for (var i = 0; i < 6; i++)
+												(function (cubeIndex)
+												{
+													var image = new Image();
+													image.textIndex= uniform.textureIndex;
+													//image.Location = 
+													//console.log(val.href, uniform.textureIndex);	
+													image.onload = function()
+													{
+														canvas.gl.activeTexture(canvas.gl.TEXTURE0 + image.textIndex);
+														console.log(val.href, cubeIndex);
+														gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_X + cubeIndex, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+														canvas.needRender = true;
+													};
+													image.crossOrigin = '';
+													image.src = val.href[i];
+												})(i)
+												
+											}
+											if(val.magFilter)
+											{	
+												canvas.gl.texParameteri(canvas.gl.TEXTURE_CUBE_MAP, canvas.gl.TEXTURE_MAG_FILTER, canvas.gl[val.magFilter]);
+												canvas.needRender = true;
+											}
+											if(val.minFilter)
+											{	
+												canvas.gl.texParameteri(canvas.gl.TEXTURE_CUBE_MAP, canvas.gl.TEXTURE_MIN_FILTER, canvas.gl[val.minFilter]);
+												canvas.needRender = true;
+											}
+											if(val.wrapS)
+											{	
+												canvas.gl.texParameteri(canvas.gl.TEXTURE_CUBE_MAP, canvas.gl.TEXTURE_WRAP_S, canvas.gl[val.wrapS]);
+												canvas.needRender = true;
+											}
+											if(val.wrapT)
+											{	
+												canvas.gl.texParameteri(canvas.gl.TEXTURE_CUBE_MAP, canvas.gl.TEXTURE_WRAP_T, canvas.gl[val.wrapT]);
+												canvas.needRender = true;
+											}
+										}
+									}
+						});
+						canvas.uniforms[info.name] = uniform;
+						canvas.gl.activeTexture(canvas.gl.TEXTURE0 + uniform.textureIndex);
+						canvas.gl.bindTexture(canvas.gl.TEXTURE_CUBE_MAP, canvas.gl.createTexture());
+						canvas.gl.texParameteri(canvas.gl.TEXTURE_CUBE_MAP, canvas.gl.TEXTURE_MAG_FILTER, canvas.gl.LINEAR);
+						canvas.gl.texParameteri(canvas.gl.TEXTURE_CUBE_MAP, canvas.gl.TEXTURE_MIN_FILTER, canvas.gl.LINEAR);  
+						canvas.gl.texParameteri(canvas.gl.TEXTURE_CUBE_MAP, canvas.gl.TEXTURE_WRAP_S, canvas.gl.CLAMP_TO_EDGE);
+						canvas.gl.texParameteri(canvas.gl.TEXTURE_CUBE_MAP, canvas.gl.TEXTURE_WRAP_T, canvas.gl.CLAMP_TO_EDGE);
+						canvas.gl.uniform1i(uniform.location, uniform.textureIndex);
+						break;
+					
 					case canvas.gl.FLOAT :
 						canvas.uniforms[info.name] = Object.create(Object.prototype,
 						{ 

@@ -1,0 +1,48 @@
+<html>
+<head> 
+	<script type="text/javascript" src="../src/ShaderElement.js"></script>
+</head>
+<body style="border: 0;padding:0;margin:0">
+	<shader style="border: 0;padding:0; width: 100%; height: 100%"
+		sky="{ href : [
+					'./assets/endora_px.jpg', 
+					'./assets/endora_nx.jpg',	
+					'./assets/endora_ny.jpg',
+					'./assets/endora_py.jpg',
+					'./assets/endora_pz.jpg',
+					'./assets/endora_nz.jpg'
+				] }"
+	>
+uniform samplerCube sky;
+uniform vec2 resolution;
+uniform float time;
+
+// transforms
+vec3 rotateX(vec3 p, float a)
+{
+    float sa = sin(a);
+    float ca = cos(a);
+    return vec3(p.x, ca*p.y - sa*p.z, sa*p.y + ca*p.z);
+}
+
+vec3 rotateY(vec3 p, float a)
+{
+    float sa = sin(a);
+    float ca = cos(a);
+    return vec3(ca*p.x + sa*p.z, p.y, -sa*p.x + ca*p.z);
+}
+
+void main(void) 
+{
+    vec2 pos = (gl_FragCoord.xy / resolution)-0.5;
+	 float ar = resolution.x / resolution.y;
+    vec3 dir = normalize(vec3(ar*pos.x, -pos.y, 1.0));
+	dir = rotateY(dir, time*0.25);
+	dir = rotateX(dir, sin(time)*radians(60.0));
+	gl_FragColor = textureCube(sky,dir);
+}
+	
+	</shader>
+
+</body>
+</html>
