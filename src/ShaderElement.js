@@ -267,8 +267,6 @@
 												{
 													var image = new Image();
 													image.textIndex= uniform.textureIndex;
-													//image.Location = 
-													//console.log(val.href, uniform.textureIndex);	
 													image.onload = function()
 													{
 														val.sample[cubeIndex] = image;
@@ -277,10 +275,6 @@
 														{
 															canvas.uniforms[name].value = val;
 														}
-														/*canvas.gl.activeTexture(canvas.gl.TEXTURE0 + image.textIndex);
-														console.log(val.href, cubeIndex);
-														gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_X + cubeIndex, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
-														canvas.needRender = true;*/
 													};
 													image.crossOrigin = '';
 													image.src = val.href[i];
