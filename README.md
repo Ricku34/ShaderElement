@@ -15,8 +15,9 @@ void main(void)
 ```
 ## Sample List
  * [Colors.html](http://ricku34.github.io/ShaderElement/samples/Colors.html) : Simple 2D fill shaders without any assets
- * [Images.html](http://ricku34.github.io/ShaderElement/samples/Images.html) : shaders working  vith  images as custom uniform
+ * [Images.html](http://ricku34.github.io/ShaderElement/samples/Images.html) : shaders working  with  images as custom uniform
  * [Sepia.html](http://ricku34.github.io/ShaderElement/samples/Sepia.html) : Sepia filter into an extenal GLSL file, show how to update uniform in **JavaScript** 
+ * [SkyBox.html](http://ricku34.github.io/ShaderElement/samples/SkyBox.html) : SkyBox sample using **samplerCube** 
  * [Fire.html](http://ricku34.github.io/ShaderElement/samples/Fire.html) : Flame effect using  noise function.
  * [La Calanque](http://ricku34.github.io/ShaderElement/samples/Calanque.html) : Nice real-time raytracing of calanque place (shader written by **XT95**) .
  
@@ -102,7 +103,7 @@ Name | Type | default value | description
 
 ## Task List
 
-- [ ] samplerCube` uniform support
+- [x] samplerCube uniform support
 - [ ] Video support
 - [ ] add  mouse event as built-in uniform
 - [ ] add  touch event as built-in uniform
