@@ -1,0 +1,37 @@
+<html>
+<head> 
+	<script type="text/javascript" src="../src/ShaderElement.js"></script>
+</head>
+<body style="border: 0;padding:0;margin:0; text-align : center">
+  
+	<shader id="Video"	style="border: 0;padding:0; width: 100%; height: 100%"
+		image="{ href : [ './assets/sintel.mp4', './assets/sintel.ogv' ] }"
+	>
+	uniform vec2 resolution;
+	uniform sampler2D image;	
+	uniform float time;
+	
+	float r (vec2 c){
+		return fract(43.*sin(c.x+7.*c.y));
+	}
+
+	float n (vec2 p){
+		vec2 i = floor(p), w = p-i, j = vec2(1.,0.);
+		w = w*w*(3.-w-w);
+		return mix(mix(r(i), r(i+j), w.x), mix(r(i+j.yx), r(i+1.), w.x), w.y);
+	}
+
+	float a (vec2 p){
+		float m = 0., f = 2.;
+		for ( int i=0; i<9; i++ ){ m += n(f*p)/f; f+=f; }
+		return m;
+	}
+
+	void main(){
+		float t = fract(.1*time);
+		gl_FragColor = texture2D(image, gl_FragCoord.xy/resolution) *  smoothstep(t, t+.1, a(4.5*gl_FragCoord.xy / resolution.x));
+	}
+	</shader>
+	
+</body>
+</html>
