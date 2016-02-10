@@ -20,6 +20,18 @@
 		 1.0,  1.0  //sommet haut droit 
 	]);
 	
+	function IsVideo(src)
+	{
+		var res = false;
+		[ ".mp4", ".ogv", ".webm"].
+		forEach(function(ext)
+		{
+			if(src.endsWith(ext))
+				res=true;
+		})
+		return res
+	}
+	
 	function InitShader(canvas,source)
 	{
 		canvas.gl =	canvas.getContext("webgl", { depth : false }) ||
@@ -194,18 +206,43 @@
 											}
 											else if(val.href)
 											{
-												(function (shader,name)
+												if(typeof val.href === 'string' && !IsVideo(val.href))
 												{
-													var image = new Image();
-													image.onload = function()
+													(function (shader,name)
 													{
-														val.sample = image;
-														shader.uniforms[name].value = val;
-													};
-													image.crossOrigin = '';
-													image.src = val.href;
-												})(canvas,info.name)
-												
+														var image = new Image();
+														image.onload = function()
+														{
+															val.sample = image;
+															shader.uniforms[name].value = val;
+														};
+														image.crossOrigin = '';
+														image.src = val.href;
+													})(canvas,info.name)
+												}
+												else
+												{
+													var sources = val.href
+													if(typeof val.href === 'string')
+														sources = [val.href];
+													(function (shader,sources,name)
+													{
+														var video = document.createElement('video');
+														video.autoplay = true;
+														video.loop= true;
+														["./assets/sintel.mp4", "./assets/sintel.ogv"].forEach(function(src)
+														{
+															var source = document.createElement('source');
+															source.src = src;
+															video.appendChild(source);
+														})
+														shader.addEventListener('frame',function()
+														{
+															shader.uniforms[name].value = { sample :  video} ;
+														},false)
+														
+													})(canvas,sources,info.name)
+												}
 											}
 											if(val.magFilter)
 											{	

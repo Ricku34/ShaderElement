@@ -14,12 +14,14 @@ void main(void)
 </shader>
 ```
 ## Sample List
- * [Colors.html](http://ricku34.github.io/ShaderElement/samples/Colors.html) : Simple 2D fill shaders without any assets
- * [Images.html](http://ricku34.github.io/ShaderElement/samples/Images.html) : shaders working  with  images as custom uniform
- * [Sepia.html](http://ricku34.github.io/ShaderElement/samples/Sepia.html) : Sepia filter into an extenal GLSL file, show how to update uniform in **JavaScript** 
- * [SkyBox.html](http://ricku34.github.io/ShaderElement/samples/SkyBox.html) : SkyBox sample using **samplerCube** 
- * [Fire.html](http://ricku34.github.io/ShaderElement/samples/Fire.html) : Flame effect using  noise function.
+ * [Colors](http://ricku34.github.io/ShaderElement/samples/Colors.html) : Simple 2D fill shaders without any assets
+ * [Images](http://ricku34.github.io/ShaderElement/samples/Images.html) : shaders working  with  images as custom uniform
+ * [Sepia](http://ricku34.github.io/ShaderElement/samples/Sepia.html) : Sepia filter into an extenal GLSL file, show how to update uniform in **JavaScript** 
+ * [SkyBox](http://ricku34.github.io/ShaderElement/samples/SkyBox.html) : SkyBox sample using **samplerCube** 
+ * [Fire](http://ricku34.github.io/ShaderElement/samples/Fire.html) : Flame effect using  noise function.
  * [La Calanque](http://ricku34.github.io/ShaderElement/samples/Calanque.html) : Nice real-time raytracing of calanque place (shader written by **XT95**) .
+ * [Videos](http://ricku34.github.io/ShaderElement/samples/Video.html) : some effects on video
+ * [DisoluteVideo](http://ricku34.github.io/ShaderElement/samples/DisoluteVideo.html) : Disolute effect on video
  
 ##How to use it?
 First, load the latest version of ShaderElement on your HTML header page
@@ -104,7 +106,7 @@ Name | Type | default value | description
 ## Task List
 
 - [x] samplerCube uniform support
-- [ ] Video support
+- [x] Video support
 - [ ] add  mouse event as built-in uniform
 - [ ] add  touch event as built-in uniform
 - [ ] add  gamepad event as built-in uniform
