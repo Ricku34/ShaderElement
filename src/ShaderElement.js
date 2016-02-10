@@ -168,9 +168,22 @@
 											canvas.gl.activeTexture(canvas.gl.TEXTURE0 + this.textureIndex);
 											if(val.sample)
 											{
-												if(typeof val.sample === 'string' && document.getElementById(val.sample))
+												var media = document.getElementById(val.sample);
+												if(typeof val.sample === 'string' && media)
 												{
-													canvas.gl.texImage2D(canvas.gl.TEXTURE_2D, 0, canvas.gl.RGBA, canvas.gl.RGBA, canvas.gl.UNSIGNED_BYTE, document.getElementById(val.sample));
+													if(!this._playingLoop && media.toString()=="[object HTMLVideoElement]")
+													{
+														this._playingLoop=true;
+														(function (shader,name)
+														{
+															shader.addEventListener('frame',function()
+															{
+																shader.uniforms[name].value = { sample :  media} ;
+															},false)
+															
+														})(canvas,info.name)
+													}
+													canvas.gl.texImage2D(canvas.gl.TEXTURE_2D, 0, canvas.gl.RGBA, canvas.gl.RGBA, canvas.gl.UNSIGNED_BYTE, media);
 													canvas.needRender = true;
 												}
 												else
@@ -181,21 +194,17 @@
 											}
 											else if(val.href)
 											{
-												var image = new Image();
-												image.textIndex= uniform.textureIndex;
-												//image.Location = 
-												//console.log(val.href, uniform.textureIndex);	
-												image.onload = function()
+												(function (shader,name)
 												{
-													//uniform.value.sample = image;
-													
-													canvas.gl.activeTexture(canvas.gl.TEXTURE0 + image.textIndex);
-													canvas.gl.texImage2D(canvas.gl.TEXTURE_2D, 0, canvas.gl.RGBA, canvas.gl.RGBA, canvas.gl.UNSIGNED_BYTE, image);
-													//canvas.gl.uniform1i(image.Location, image.textIndex);
-													canvas.needRender = true;
-												};
-												image.crossOrigin = '';
-												image.src = val.href;
+													var image = new Image();
+													image.onload = function()
+													{
+														val.sample = image;
+														shader.uniforms[name].value = val;
+													};
+													image.crossOrigin = '';
+													image.src = val.href;
+												})(canvas,info.name)
 												
 											}
 											if(val.magFilter)
@@ -263,22 +272,21 @@
 												val.sample = new Array(6);
 												val.cubeCount = 0;
 												for (var i = 0; i < 6; i++)
-												(function (cubeIndex,name)
+												(function (shader,cubeIndex,val,name)
 												{
 													var image = new Image();
-													image.textIndex= uniform.textureIndex;
 													image.onload = function()
 													{
 														val.sample[cubeIndex] = image;
 														val.cubeCount++;
 														if(val.cubeCount == 6)
 														{
-															canvas.uniforms[name].value = val;
+															shader.uniforms[name].value = val;
 														}
 													};
 													image.crossOrigin = '';
 													image.src = val.href[i];
-												})(i,info.name)
+												})(canvas,i,val,info.name)
 												
 											}
 											if(val.magFilter)
@@ -486,29 +494,32 @@
 			}
 			else if(canvas.hasAttribute('src'))
 			{
-				var xhr = new XMLHttpRequest();
-				xhr.onreadystatechange = function() 
+				(function(canvas,shader)
 				{
-					if ( xhr.readyState == 4 ) 
+					var xhr = new XMLHttpRequest();
+					xhr.onreadystatechange = function() 
 					{
-						if ( xhr.status == 200 || xhr.status == 0 ) 
+						if ( xhr.readyState == 4 ) 
 						{
-							if(InitShader(canvas,xhr.responseText))
+							if ( xhr.status == 200 || xhr.status == 0 ) 
+							{
+								if(InitShader(canvas,xhr.responseText))
+									shader.dispatchEvent(initEvent);
+							}		
+							else if(InitShader(canvas,shaderSource))
 								shader.dispatchEvent(initEvent);
-						}		
-						else if(InitShader(canvas,shaderSource))
-							shader.dispatchEvent(initEvent);
+						}
+					};
+					try
+					{
+						xhr.open( "GET", canvas.getAttribute('src'), true );
+						xhr.send( null );
+					} 
+					catch (error)
+					{
+						console.error(error);
 					}
-				};
-				try
-				{
-					xhr.open( "GET", canvas.getAttribute('src'), true );
-					xhr.send( null );
-				} 
-				catch (error)
-				{
-					console.error(error);
-				}
+				})(canvas,shader)
 			}
 			else if(InitShader(canvas,shaderSource))
 					shader.dispatchEvent(initEvent);
@@ -522,10 +533,12 @@
 	
 	function RenderLoop()
 	{
+		var event = new Event('frame');
 		requestAnimationFrame(RenderLoop);
 		var currentTime = (Date.now()-StartTime)/1000;
 		for(var i=0;i<Shaders.length;i++)
 		{	
+			Shaders[i].dispatchEvent(event);
 			if(Shaders[i].uniforms["time"])
 				Shaders[i].uniforms.time.value = currentTime;
 				
