@@ -20,7 +20,7 @@ void main(void)
  * [SkyBox](http://ricku34.github.io/ShaderElement/samples/SkyBox.html) : SkyBox sample using **samplerCube** 
  * [Fire](http://ricku34.github.io/ShaderElement/samples/Fire.html) : Flame effect using  noise function.
  * [La Calanque](http://ricku34.github.io/ShaderElement/samples/Calanque.html) : Nice real-time raytracing of calanque place (shader written by **XT95**) .
- * [Videos](http://ricku34.github.io/ShaderElement/samples/Calanque.html) : some effects on video
+ * [Videos](http://ricku34.github.io/ShaderElement/samples/Video.html) : some effects on video
  * [DisoluteVideo](http://ricku34.github.io/ShaderElement/samples/DisoluteVideo.html) : Disolute effect on video
  
 ##How to use it?
