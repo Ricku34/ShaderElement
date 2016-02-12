@@ -56,6 +56,10 @@
 <a href="http://ricku34.github.io/ShaderElement/samples/Video.html">Videos</a> : some effects on video</li>
 <li>
 <a href="http://ricku34.github.io/ShaderElement/samples/DisoluteVideo.html">DisoluteVideo</a> : Disolute effect on video</li>
+<li>
+<a href="http://ricku34.github.io/ShaderElement/samples/Mouse.html">Mouse</a> : Display disc on the coordinate of the mouse and animate it when left button is push</li>
+<li>
+<a href="http://ricku34.github.io/ShaderElement/samples/Landscape.html">Landscape</a> : Free fly through nice procedural landscape (by David Hoskins) with FPS camera style.</li>
 </ul>
 
 <h2>
@@ -135,6 +139,10 @@
 <tr>
 <td><code>uniform vec2 resolution;</code></td>
 <td>the dimensions in pixel of the rendering surface</td>
+</tr>
+<tr>
+<td><code>uniform vec4 mouse</code></td>
+<td>XY : the coordinate in pixel, W : buttons states</td>
 </tr>
 </tbody>
 </table>
@@ -259,7 +267,7 @@ follow the correspondence table of types below :</p>
 <ul>
 <li>[x] samplerCube uniform support</li>
 <li>[x] Video support</li>
-<li>[ ] add  mouse event as built-in uniform</li>
+<li>[x] add  mouse event as built-in uniform</li>
 <li>[ ] add  touch event as built-in uniform</li>
 <li>[ ] add  gamepad event as built-in uniform</li>
 <li>[ ] add  keyboard event as built-in uniform</li>
