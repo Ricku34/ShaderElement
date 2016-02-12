@@ -23,6 +23,7 @@ void main(void)
  * [Videos](http://ricku34.github.io/ShaderElement/samples/Video.html) : some effects on video
  * [DisoluteVideo](http://ricku34.github.io/ShaderElement/samples/DisoluteVideo.html) : Disolute effect on video
  * [Mouse](http://ricku34.github.io/ShaderElement/samples/Mouse.html) : Display disc on the coordinate of the mouse and animate it when left button is push
+ * [Landscape](http://ricku34.github.io/ShaderElement/samples/Landscape.html) : Free fly through nice procedural landscape (by David Hoskins) with FPS camera style.
  
 ##How to use it?
 First, load the latest version of ShaderElement on your HTML header page

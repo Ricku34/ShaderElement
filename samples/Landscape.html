@@ -1,0 +1,120 @@
+<html>
+<head> 
+	<script type="text/javascript" src="https://raw.githubusercontent.com/toji/gl-matrix/v2.3.1/dist/gl-matrix-min.js"></script>
+	<script type="text/javascript" src="../src/ShaderElement.js"></script>
+</head>
+<body style="border: 0;padding:0; margin: 0">
+  <shader id="Render" style="border: 0;padding:0; width: 100%; height: 100%" 
+	src="landscape.glsl" CameraView="[1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]"
+  >
+  </shader>
+  <script>
+	var KeyboardManager = (function ()
+	{
+		var input = 
+		{
+			Keys:
+			{
+				Up   : "38",
+				Down : "40",
+				Left : "37",
+				Right: "39"
+			}
+		};
+		
+		document.addEventListener('keydown',
+			function( evt )
+			{
+				input.Keys[evt.keyCode]=true;
+			}, false);
+			
+		document.addEventListener('keyup',
+			function( evt )
+			{
+				input.Keys[evt.keyCode]=false;
+			}, false);
+		
+		return input;
+		
+	})()
+	
+	document.getElementById("Render").addEventListener('init',function(evt)
+	{	//Init event is call when the shader is ready 
+		var shader = evt.detail;// got the new ref of the extended DOM canvas element
+		shader.pixelSampling=3;// only 1/3 of pixels will be evaluted 
+		
+		var pan=0,tilt=0;
+		var pos = vec3.create();
+		
+		function GetCameraView()
+		{
+			var mat = mat4.create();
+			mat4.identity(mat);
+			mat4.rotate(mat,mat, pan * Math.PI / 180, [0 , 1, 0 ]);
+			mat4.rotate(mat,mat, tilt * Math.PI / 180, [ mat[0], mat[4], mat[8] ]);
+			mat[12] = pos[0];
+			mat[13] = pos[1];
+			mat[14] = pos[2];
+			return mat;
+		}
+		
+		shader.uniforms.CameraView.value = GetCameraView()
+		shader.addEventListener('frame',function()
+		{
+			//this is  call every frame
+			var step = 0.1;
+			var mat = shader.uniforms.CameraView.value; 
+			var atVector = [ mat[2], mat[6], mat[10] ];
+			var leftVector = [ mat[0], mat[4], mat[8] ];
+			if(KeyboardManager.Keys[KeyboardManager.Keys.Up])
+			{
+				vec3.add(pos,pos,vec3.scale(atVector,atVector,step));
+			}
+			else if(KeyboardManager.Keys[KeyboardManager.Keys.Down])
+			{
+				vec3.add(pos,pos,vec3.scale(atVector,atVector,-step));
+			}
+			if(KeyboardManager.Keys[KeyboardManager.Keys.Right])
+			{
+				vec3.add(pos,pos,vec3.scale(leftVector,leftVector,-step));
+			}
+			else if(KeyboardManager.Keys[KeyboardManager.Keys.Left])
+			{
+				vec3.add(pos,pos,vec3.scale(leftVector,leftVector,step));
+			}
+			
+			shader.uniforms.CameraView.value = GetCameraView()
+		},false)
+		
+		var mousedown,mouseXY;
+		document.addEventListener('mousedown',
+		function( evt )
+		{
+			mousedown = true;
+			mouseXY = { x : evt.clientX, y : evt.clientY };
+		}, false);
+		
+		document.addEventListener('mouseup',
+		function( evt )
+		{
+			mousedown = false;
+		}, false);
+		
+		document.addEventListener('mousemove',
+		function( evt )
+		{
+			if(mousedown)
+			{
+				pan += (evt.clientX - mouseXY.x) *0.009;
+				pan += 360;
+				pan %= 360;
+				
+				tilt += (mouseXY.y- evt.clientY) *0.009;
+				tilt = Math.max(Math.min(tilt,90),-90);
+			}
+		}, false);
+		
+	},false)
+	</script>
+</body>
+</html>

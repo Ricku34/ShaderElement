@@ -82,6 +82,17 @@
 		canvas.gl.bufferData(canvas.gl.ARRAY_BUFFER, QuadVertexBuffer,  canvas.gl.STATIC_DRAW);
 
 		canvas.gl.vertexAttribPointer(canvas.shaderProgram.vertexPositionAttribute, 2, canvas.gl.FLOAT, false, 0, 0);
+		var _pixelSampling=1;
+		Object.defineProperty(canvas,"pixelSampling",
+		{  enumerable : true,
+			get : function() { return _pixelSampling;},
+			set : function (val)
+			{
+				_pixelSampling = val
+				this.resizeShader();
+			}
+		});	
+		
 		
 		canvas.renderShader = function ()
 		{
@@ -92,8 +103,8 @@
 		
 		canvas.resizeShader = function ()
 		{
-			canvas.width = canvas.scrollWidth;
-			canvas.height = canvas.scrollHeight;
+			canvas.width = Math.floor(canvas.scrollWidth/_pixelSampling);
+			canvas.height = Math.floor(canvas.scrollHeight/_pixelSampling);
 			canvas.gl.viewport(0.0, 0.0, canvas.width, canvas.height);
 			
 			if(canvas.uniforms["resolution"] && canvas.uniforms["resolution"].type == "vec2")
