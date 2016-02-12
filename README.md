@@ -22,7 +22,7 @@ void main(void)
  * [La Calanque](http://ricku34.github.io/ShaderElement/samples/Calanque.html) : Nice real-time raytracing of calanque place (shader written by **XT95**) .
  * [Videos](http://ricku34.github.io/ShaderElement/samples/Video.html) : some effects on video
  * [DisoluteVideo](http://ricku34.github.io/ShaderElement/samples/DisoluteVideo.html) : Disolute effect on video
- * [Mouse](http://ricku34.github.io/ShaderElement/samples/Mouse.html) : Display disc on the coordinate of the mouse and animate it when left button is push
+ * [Mouse](http://ricku34.github.io/ShaderElement/samples/mouse.html) : Display disc on the coordinate of the mouse and animate it when left button is push
  * [Landscape](http://ricku34.github.io/ShaderElement/samples/Landscape.html) : Free fly through nice procedural landscape (by David Hoskins) with FPS camera style.
  
 ##How to use it?
