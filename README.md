@@ -22,6 +22,7 @@ void main(void)
  * [La Calanque](http://ricku34.github.io/ShaderElement/samples/Calanque.html) : Nice real-time raytracing of calanque place (shader written by **XT95**) .
  * [Videos](http://ricku34.github.io/ShaderElement/samples/Video.html) : some effects on video
  * [DisoluteVideo](http://ricku34.github.io/ShaderElement/samples/DisoluteVideo.html) : Disolute effect on video
+ * [Mouse](http://ricku34.github.io/ShaderElement/samples/Mouse.html) : Display disc on the coordinate of the mouse and animate it when left button is push
  
 ##How to use it?
 First, load the latest version of ShaderElement on your HTML header page
@@ -74,6 +75,8 @@ Uniforms | Description
 -------- | -----------
 `uniform float time;` | elapsed time in seconds
 `uniform vec2 resolution;` | the dimensions in pixel of the rendering surface
+`uniform vec4 mouse` | XY : the coordinate in pixel, W : buttons states
+
 
 ####Custom Uniforms
 Custom Uniforms can be initialized directly by DOM attibut inside the shader tag, the attribut value must be a valide JSON.
@@ -107,7 +110,7 @@ Name | Type | default value | description
 
 - [x] samplerCube uniform support
 - [x] Video support
-- [ ] add  mouse event as built-in uniform
+- [x] add  mouse event as built-in uniform
 - [ ] add  touch event as built-in uniform
 - [ ] add  gamepad event as built-in uniform
 - [ ] add  keyboard event as built-in uniform
