@@ -3,10 +3,8 @@
 	var Shaders = [];
 	var VertexShaderSource = [ 
 	"attribute vec2 vertex;",
-//	"varying vec2 position;",
 	"void main(void)", 
 	"{",
-//	"	position = vertex;",
 	"	gl_Position.xy = vertex;",
 	"	gl_Position.z = 0.0;",
 	"	gl_Position.w = 1.0;", 
@@ -84,6 +82,17 @@
 		canvas.gl.bufferData(canvas.gl.ARRAY_BUFFER, QuadVertexBuffer,  canvas.gl.STATIC_DRAW);
 
 		canvas.gl.vertexAttribPointer(canvas.shaderProgram.vertexPositionAttribute, 2, canvas.gl.FLOAT, false, 0, 0);
+		var _pixelSampling=1;
+		Object.defineProperty(canvas,"pixelSampling",
+		{  enumerable : true,
+			get : function() { return _pixelSampling;},
+			set : function (val)
+			{
+				_pixelSampling = val
+				this.resizeShader();
+			}
+		});	
+		
 		
 		canvas.renderShader = function ()
 		{
@@ -94,8 +103,8 @@
 		
 		canvas.resizeShader = function ()
 		{
-			canvas.width = canvas.scrollWidth;
-			canvas.height = canvas.scrollHeight;
+			canvas.width = Math.floor(canvas.scrollWidth/_pixelSampling);
+			canvas.height = Math.floor(canvas.scrollHeight/_pixelSampling);
 			canvas.gl.viewport(0.0, 0.0, canvas.width, canvas.height);
 			
 			if(canvas.uniforms["resolution"] && canvas.uniforms["resolution"].type == "vec2")
@@ -103,14 +112,29 @@
 				canvas.uniforms.resolution.value = [canvas.width, canvas.height];
 			}
 		};
-		
 		canvas.resizeShader();
-		window.addEventListener("resize",function()
-		{
-			if(canvas.width != canvas.scrollWidth || canvas.height != canvas.scrollHeight)
-				canvas.resizeShader();	
-		},false)
 		canvas.needRender = true;
+		
+		if(canvas.uniforms["mouse"] && canvas.uniforms["mouse"].type == "vec4")
+		{
+			canvas.addEventListener('mousemove', function(evt) 
+			{
+				 var rect = canvas.getBoundingClientRect();
+				 if(evt.buttons)
+					console.log(evt.buttons);
+				 canvas.uniforms.mouse.value = [evt.clientX - rect.left, rect.bottom - evt.clientY, 0, evt.buttons];
+			},false)
+			
+			function UpdaeButtonsState(evt) 
+			{
+				 var v = canvas.uniforms.mouse.value;
+				 v[3] = evt.buttons;
+				 canvas.uniforms.mouse.value = v;
+			}
+			canvas.addEventListener('mousedown',UpdaeButtonsState,false)
+			canvas.addEventListener('mouseup',UpdaeButtonsState,false)
+			
+		}
 		
 		Shaders.push(canvas);
 		return true;
@@ -564,6 +588,16 @@
 					
 		RenderLoop();
 	});
+	
+	
+	window.addEventListener("resize",function()
+	{
+		Shaders.forEach(function (shader)
+		{
+			if(shader.width != shader.scrollWidth || shader.height != shader.scrollHeight)
+				shader.resizeShader();
+		})
+	},false)
 	
 	var StartTime = Date.now();
 	var LastTime = null;
