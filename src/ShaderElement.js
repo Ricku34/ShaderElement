@@ -32,14 +32,7 @@
 	
 	function InitShader(canvas,source)
 	{
-		canvas.gl =	canvas.getContext("webgl", { depth : false }) ||
-					canvas.getContext("experimental-webgl", { depth : false });
-		if (!canvas.gl) 
-		{
-			console.error("Your navigator don't support WebGL!");
-			return false;
-		}
-		
+
 		canvas.gl.disable( canvas.gl.CULL_FACE );
 		canvas.gl.enable( canvas.gl.BLEND );
 		canvas.gl.blendEquation( canvas.gl.FUNC_ADD );
@@ -540,50 +533,94 @@
 		{	
 			var shader = shadertags[0];
 			var canvas = document.createElement('canvas');
-			var initEvent = new CustomEvent('init', { 'detail': canvas });
-			for(var i=0;i<shader.attributes.length;i++)
+			(function(canvas,shader)
 			{
-				canvas.setAttribute(shader.attributes[i].nodeName,shader.attributes[i].value);
-			}
-			var shaderSource = shader.innerHTML;
-			shader.parentNode.replaceChild(canvas,shader);
-			
-			if(canvas.hasAttribute('src') && document.getElementById(canvas.getAttribute('src')))
-			{
-				if(InitShader(canvas,document.getElementById(canvas.getAttribute('src')).textContent))
-					shader.dispatchEvent(initEvent);
-			}
-			else if(canvas.hasAttribute('src'))
-			{
-				(function(canvas,shader)
+				var errorElt;
+				for (var i = 0; i < shader.children.length; i++) 
 				{
-					var xhr = new XMLHttpRequest();
-					xhr.onreadystatechange = function() 
+					if(shader.children[i].hasAttribute("class") && shader.children[i].getAttribute("class").indexOf('ShaderElement-Error')>=0)
+						errorElt = shader.children[i];
+					shader.children[i].remove();
+				}
+				var initEvent = new CustomEvent('init', { 'detail': canvas });
+				for(var i=0;i<shader.attributes.length;i++)
+				{
+					canvas.setAttribute(shader.attributes[i].nodeName,shader.attributes[i].value);
+				}
+				var shaderSource = shader.innerHTML;
+				shader.parentNode.replaceChild(canvas,shader);
+				
+				canvas.gl =	canvas.getContext("webgl", { depth : false }) ||
+							canvas.getContext("experimental-webgl", { depth : false });
+				
+				function DisplayError(txt)
+				{
+					var div = errorElt || document.createElement('div');
+					for(var p in canvas.style)
+						div.style[p] = canvas.style[p];
+					if(!errorElt)
 					{
-						if ( xhr.readyState == 4 ) 
-						{
-							if ( xhr.status == 200 || xhr.status == 0 ) 
-							{
-								if(InitShader(canvas,xhr.responseText))
-									shader.dispatchEvent(initEvent);
-							}		
-							else if(InitShader(canvas,shaderSource))
-								shader.dispatchEvent(initEvent);
-						}
-					};
-					try
-					{
-						xhr.open( "GET", canvas.getAttribute('src'), true );
-						xhr.send( null );
-					} 
-					catch (error)
-					{
-						console.error(error);
+						div.style.display = "inline-block";
+						div.style.backgroundColor ="black";
+						div.style.color ="red";
+						div.style.textAlign = "center";
+						div.innerHTML=txt;
 					}
-				})(canvas,shader)
-			}
-			else if(InitShader(canvas,shaderSource))
-					shader.dispatchEvent(initEvent);
+					canvas.parentNode.replaceChild(div,canvas);
+				}
+				
+				if (!canvas.gl) 
+				{
+					console.error("This browser does not support WebGL!");
+					DisplayError("This browser does not support WebGL!")
+				}
+				else
+				{
+					if(canvas.hasAttribute('src') && document.getElementById(canvas.getAttribute('src')))
+					{
+						if(InitShader(canvas,document.getElementById(canvas.getAttribute('src')).textContent))
+							shader.dispatchEvent(initEvent);
+						else
+							DisplayError("An error occurred compiling this Shader")
+					}
+					else if(canvas.hasAttribute('src'))
+					{
+						
+							var xhr = new XMLHttpRequest();
+							xhr.onreadystatechange = function() 
+							{
+								if ( xhr.readyState == 4 ) 
+								{
+									if ( xhr.status == 200 || xhr.status == 0 ) 
+									{
+										if(InitShader(canvas,xhr.responseText))
+											shader.dispatchEvent(initEvent);
+										else
+											DisplayError("An error occurred compiling this Shader")
+									}		
+									else if(InitShader(canvas,shaderSource))
+										shader.dispatchEvent(initEvent);
+									else
+										DisplayError("An error occurred compiling this Shader")
+								}
+							};
+							try
+							{
+								xhr.open( "GET", canvas.getAttribute('src'), true );
+								xhr.send( null );
+							} 
+							catch (error)
+							{
+								console.error(error);
+							}
+						
+					}
+					else if(InitShader(canvas,shaderSource))
+							shader.dispatchEvent(initEvent);
+					else
+							DisplayError("An error occurred compiling this Shader")
+				}
+			})(canvas,shader)
 		}
 					
 		RenderLoop();

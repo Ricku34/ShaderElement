@@ -19,10 +19,10 @@ void main(void)
  * [Sepia](http://ricku34.github.io/ShaderElement/samples/Sepia.html) : Sepia filter into an extenal GLSL file, show how to update uniform in **JavaScript** 
  * [SkyBox](http://ricku34.github.io/ShaderElement/samples/SkyBox.html) : SkyBox sample using **samplerCube** 
  * [Fire](http://ricku34.github.io/ShaderElement/samples/Fire.html) : Flame effect using  noise function.
- * [La Calanque](http://ricku34.github.io/ShaderElement/samples/Calanque.html) : Nice real-time raytracing of calanque place (shader written by **XT95**) .
+ * [La Calanque](http://ricku34.github.io/ShaderElement/samples/Calanque.html) : Nice real-time raytracing of calanque place (shader written by **XT95**), show how to set custom HMTL for backward error.
  * [Videos](http://ricku34.github.io/ShaderElement/samples/Video.html) : some effects on video
  * [DisoluteVideo](http://ricku34.github.io/ShaderElement/samples/DisoluteVideo.html) : Disolute effect on video
- * [Mouse](http://ricku34.github.io/ShaderElement/samples/Mouse.html) : Display disc on the coordinate of the mouse and animate it when left button is push
+ * [Mouse](http://ricku34.github.io/ShaderElement/samples/mouse.html) : Display disc on the coordinate of the mouse and animate it when left button is push
  * [Landscape](http://ricku34.github.io/ShaderElement/samples/Landscape.html) : Free fly through nice procedural landscape (by David Hoskins) with FPS camera style.
  
 ##How to use it?
@@ -106,6 +106,9 @@ Name | Type | default value | description
 **magFilter** | `String` | 'LINEAR' | must be one of this :  'LINEAR' or 'NEAREST'
 **minFilter** | `String` | 'LINEAR' | must be one of this :  'LINEAR' or 'NEAREST'
 
+###Customize Error & backward compatiblity
+All DOM elements inside `<shader>` element are removed before compiling the shader, but if one of them is marked as **ShaderElement-Error** by a class this element will replace the shader if an error are occured
+look [La Calanque](http://ricku34.github.io/ShaderElement/samples/Calanque.html) example
 
 ## Task List
 
