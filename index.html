@@ -12,7 +12,7 @@
   <body>
     <section class="page-header">
       <h1 class="project-name">ShaderElement</h1>
-      <h2 class="project-tagline">Write PixelShader in GLSL directly inside an HTML document, using WebGL context of an canvas</h2>
+      <h2 class="project-tagline">Write PixelShader in GLSL directly inside an HTML document, using WebGL</h2>
       <a href="https://github.com/Ricku34/ShaderElement" class="btn">View on GitHub</a>
       <a href="https://github.com/Ricku34/ShaderElement/zipball/master" class="btn">Download .zip</a>
       <a href="https://github.com/Ricku34/ShaderElement/tarball/master" class="btn">Download .tar.gz</a>
@@ -51,13 +51,13 @@
 <li>
 <a href="http://ricku34.github.io/ShaderElement/samples/Fire.html">Fire</a> : Flame effect using  noise function.</li>
 <li>
-<a href="http://ricku34.github.io/ShaderElement/samples/Calanque.html">La Calanque</a> : Nice real-time raytracing of calanque place (shader written by <strong>XT95</strong>) .</li>
+<a href="http://ricku34.github.io/ShaderElement/samples/Calanque.html">La Calanque</a> : Nice real-time raytracing of calanque place (shader written by <strong>XT95</strong>), show how to set custom HMTL for backward error.</li>
 <li>
 <a href="http://ricku34.github.io/ShaderElement/samples/Video.html">Videos</a> : some effects on video</li>
 <li>
 <a href="http://ricku34.github.io/ShaderElement/samples/DisoluteVideo.html">DisoluteVideo</a> : Disolute effect on video</li>
 <li>
-<a href="http://ricku34.github.io/ShaderElement/samples/Mouse.html">Mouse</a> : Display disc on the coordinate of the mouse and animate it when left button is push</li>
+<a href="http://ricku34.github.io/ShaderElement/samples/mouse.html">Mouse</a> : Display disc on the coordinate of the mouse and animate it when left button is push</li>
 <li>
 <a href="http://ricku34.github.io/ShaderElement/samples/Landscape.html">Landscape</a> : Free fly through nice procedural landscape (by David Hoskins) with FPS camera style.</li>
 </ul>
@@ -260,6 +260,12 @@ follow the correspondence table of types below :</p>
 </tr>
 </tbody>
 </table>
+
+<h3>
+<a id="customize-error--backward-compatiblity" class="anchor" href="#customize-error--backward-compatiblity" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Customize Error &amp; backward compatiblity</h3>
+
+<p>All DOM elements inside <code>&lt;shader&gt;</code> element are removed before compiling the shader, but if one of them is marked as <strong>ShaderElement-Error</strong> by a class this element will replace the shader if an error are occured
+look <a href="http://ricku34.github.io/ShaderElement/samples/Calanque.html">La Calanque</a> example</p>
 
 <h2>
 <a id="task-list" class="anchor" href="#task-list" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Task List</h2>
